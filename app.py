@@ -3,7 +3,7 @@
 RasPi-WebLights - Control Neopixels from a webpage - created by Mark Cantrill @Astro-Designs
 
 '''
-version = "1.0.23"
+version = "1.0.25"
 
 import os
 import sys
@@ -76,10 +76,10 @@ modes = {
    16 : {'name' : "RainbowCycle",           'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    17 : {'name' : "CheerLights",            'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    18 : {'name' : "Pacman",                 'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
-   19 : {'name' : "TheaterChaseWhite",      'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
-   20 : {'name' : "TheaterChaseRed",        'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
-   21 : {'name' : "TheaterChaseBlue",       'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
-   22 : {'name' : "Rainbow",                'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
+   19 : {'name' : "TheaterChaseWhite",      'R' : 255, 'G' : 255, 'B' : 255, 'Br' : 50},
+   20 : {'name' : "TheaterChaseRed",        'R' : 255, 'G' : 000, 'B' : 000, 'Br' : 50},
+   21 : {'name' : "TheaterChaseGreen",      'R' : 000, 'G' : 255, 'B' : 000, 'Br' : 50},
+   21 : {'name' : "TheaterChaseBlue",       'R' : 000, 'G' : 000, 'B' : 255, 'Br' : 50},
    23 : {'name' : "RainbowCycle",           'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    24 : {'name' : "TheaterChaseRainbow",    'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    25 : {'name' : "CountDown",              'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
@@ -157,7 +157,7 @@ def setBrightness(red_100, green_100, blue_100, brightness = 100):
 # Define a function to set all LEDs to black / off.
 def allBlack(strip, wait_ms=50):
 	color = Color(0,0,0)
-	print('Colour (R, G, B): ', color)
+	#print('Colour (R, G, B): ', color)
 	for i in range(strip.numPixels()):
 		strip.setPixelColor(i,color)
 		if wait_ms > 0:
@@ -186,7 +186,7 @@ def colorWipe(strip, color, wait_ms=50):
    
 # Function to continuously sweep eight green LEDs from one end of the array to the other
 def cylon(strip, wait_ms=50):
-	print("By your command!")
+	#print("By your command!")
 	dir = 1
 	i = 10
 	i1 = 9
@@ -238,7 +238,7 @@ def cylon(strip, wait_ms=50):
       
 # Function to create a red comet-tail effect sweeping continuously from one end of the array to the other.
 def kitt(strip, wait_ms=50):
-	print("Hello, I'm the Knight Industries Two-Thousand!")
+	#print("Hello, I'm the Knight Industries Two-Thousand!")
 	dir = 1
 	i   = 30
 	i1  = 29
@@ -465,12 +465,12 @@ def pacman(strip, wait_ms=50):
 		# (if pacman is on the board...)
 		if pacman_pos > -1 and pacman_pos < strip.numPixels()-1:
 			if food_pos[pacman_pos] == 1:
-				print("Yum")
+				#print("Yum")
 				food_pos[pacman_pos] = 0
 			
 		# Eat the star...
 		if pacman_pos == star_pos:
-			print("Yum!!! A pill!")
+			#print("Yum!!! A pill!")
 			pacman_dir = 0
 			star_pos = -1
 			blueghost_pos = redghost_pos
@@ -482,7 +482,7 @@ def pacman(strip, wait_ms=50):
 
 		# pacman eats blue ghost...
 		if pacman_pos == blueghost_pos:
-			print("YUM!!! Eat blue ghost")
+			#print("YUM!!! Eat blue ghost")
 			blueghost_pos = -1000
 		else:
 			# Blue ghost runs away from pacman
@@ -494,7 +494,7 @@ def pacman(strip, wait_ms=50):
 					blueghost_pos = blueghost_pos + 1
 
 		if pacman_pos == blueghost2_pos:
-			print("YUM!!! Eat blue ghost")
+			#print("YUM!!! Eat blue ghost")
 			blueghost2_pos = -1000
 		else:
 			# Blue ghost runs away from pacman
@@ -506,7 +506,7 @@ def pacman(strip, wait_ms=50):
 					blueghost2_pos = blueghost2_pos + 1
 
 		if pacman_pos == blueghost3_pos:
-			print("YUM!!! Eat blue ghost")
+			#print("YUM!!! Eat blue ghost")
 			blueghost3_pos = -1000
 		else:
 			# Blue ghost runs away from pacman
@@ -521,7 +521,7 @@ def pacman(strip, wait_ms=50):
 		# redghost eats pacman
 		# Send pacman off the board one way or the other...
 		if pacman_pos == redghost_pos or pacman_pos == redghost2_pos or pacman_pos == redghost3_pos:
-			print("Arrrrgh!!!")
+			#print("Arrrrgh!!!")
 			if pacman_dir == 1:
 				pacman_pos = pacman_pos + 500
 			else:
@@ -627,8 +627,7 @@ def ChristmasLights(strip, wait_ms=50):
 # Function to read the current Cheerlights feed colour and apply the colour to all LEDs
 def cheerlights(strip, wait_ms=1000):
     global modes
-    
-    print("Cheerlights...")
+    #print("Cheerlights...")
     
     #process the currently available list of colours
     r = requests.get('http://api.thingspeak.com/channels/1417/field/1/last.json', timeout=2)
@@ -659,17 +658,16 @@ def cheerlights(strip, wait_ms=1000):
         colorWipe(strip, color, 0)
         time.sleep(wait_ms/1000.0)
 	
-def theaterChase(strip, color, wait_ms=50):
-
-	print("Movie theater light style chaser animation.")
+def theaterChase(strip, color, wait_ms=25):
+	#print("Movie theater light style chaser animation.")
 
 	current_mode = mode
 
 	while mode == current_mode:
-		color = dimmer(color, brightness)
+		dimmed_color = dimmer(color, brightness)
 		for q in range(3):
 			for i in range(0, strip.numPixels(), 3):
-				strip.setPixelColor(i+q, color)
+				strip.setPixelColor(i+q, dimmed_color)
 			strip.show()
 			time.sleep(wait_ms/1000.0)
 			for i in range(0, strip.numPixels(), 3):
@@ -709,7 +707,7 @@ def rainbow(strip, wait_ms=20, iterations=1):
 	
 
 def rainbowCycle(strip, wait_ms=20, iterations=5):
-	print("Draw rainbow that uniformly distributes itself across all pixels.")
+	#print("Draw rainbow that uniformly distributes itself across all pixels.")
 	
 	# Initialise variables...
 	j = 0
@@ -732,7 +730,7 @@ def rainbowCycle(strip, wait_ms=20, iterations=5):
 	time.sleep(1)
 
 def theaterChaseRainbow(strip, wait_ms=50):
-	print("Rainbow movie theater light style chaser animation.")
+	#print("Rainbow movie theater light style chaser animation.")
 	
 	# Initialise variables...
 	j = 0
@@ -957,8 +955,7 @@ def CountDown(strip, wait_ms=30):
 # Reverts to previous mode after 5 minutes
 def White_5min(strip):
 	global mode, brightness
-    
-	print("Temporary program #1 - All white for 5 minutes")
+	#print("Temporary program #1 - All white for 5 minutes")
 
 	current_mode = mode
 	current_brightness = brightness
@@ -997,7 +994,7 @@ class neopixel_prog:
            print("Running neopixel_prog")
 
            while self._running:
-               print("Applying mode")
+               #print("Applying mode")
                if mode == 0: # White
                   red = modes[mode]['R']
                   green = modes[mode]['G']
@@ -1085,14 +1082,11 @@ class neopixel_prog:
                   cheerlights(strip,1000)
                elif mode == 18:
                   pacman(strip,7)
-               elif mode == 19:
-                  theaterChase(strip, Color(127, 127, 127))  # White theater chase
-               elif mode == 20:
-                  theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-               elif mode == 21:
-                  theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-               elif mode == 22:
-                  rainbow(strip)
+               elif mode == 19 or mode == 20 or mode== 21 or mode == 22:
+                  red = modes[mode]['R']
+                  green = modes[mode]['G']
+                  blue = modes[mode]['B']
+                  theaterChase(strip, Color(red, green, blue))  # White theater chase
                elif mode == 23:
                   rainbowCycle(strip)
                elif mode == 24:
@@ -1146,12 +1140,12 @@ def action(changePin, action):
       GPIO.output(changePin, GPIO.HIGH)
       # Save the status message to be passed into the template:
       message = "Turned " + deviceName + " on."
-      print(message)
+      #print(message)
       logger.info(message)
    if action == "off":
       GPIO.output(changePin, GPIO.LOW)
       message = "Turned " + deviceName + " off."
-      print(message)
+      #print(message)
       logger.info(message)
 
    # For each pin, read the pin state and store it in the pins dictionary:
@@ -1190,7 +1184,7 @@ def set_mode(changeMode):
    mode = max(mode, 0)
    
    message = "Setting Mode: " + str(mode)
-   print(message)
+   #print(message)
    logger.info(message)
    
    # Put the controls into the template data dictionary:
@@ -1222,7 +1216,7 @@ def random():
    mode = max(mode, 0)
       
    message = "Setting Random Mode: " + str(mode)
-   print(message)
+   #print(message)
    logger.info(message)
 
    # Put the controls into the template data dictionary:
@@ -1259,7 +1253,7 @@ def set_brighness(changeBrightness):
    brightness = max(brightness, 0)
 
    message = "Setting Brightness: " + str(brightness)
-   print(message)
+   #print(message)
    logger.info(message)
 
    # Put the controls into the template data dictionary:
@@ -1283,25 +1277,25 @@ def system(action):
    if action == "shutdown":
       # Shutdown...
       message = "Shutting down..."
-      print(message)
+      #print(message)
       logger.info(message)
       os.system("sudo shutdown") 
    elif action == "exit":
       # Exit to the command prompt...
       message = "Closing..."
-      print(message)
+      #print(message)
       logger.info(message)
       sys.exit()
    elif action == "reboot":
       # Reboot...
       message = "Rebooting..."
-      print(message)
+      #print(message)
       logger.info(message)
       os.system("sudo reboot") 
    elif action == "ping":
       # Ping to check it's alive...
       message = "Received a Ping!"
-      print(message)
+      #print(message)
       logger.info(message)
 
    # Put the pin dictionary into the template data dictionary:
@@ -1321,18 +1315,18 @@ def system(action):
 if __name__ == "__main__":
 
    message = "Starting RasPi-WebLights - Version" + str(version)
-   print(message)
+   #print(message)
    logger.info(message)
 
    # Initialise Neopixel strip
    message = "Initialising strip..."
-   print(message)
+   #print(message)
    logger.info(message)
    strip.begin()
 
    # Start lighting controller thread...
    message = "Starting lighting controller thread..."
-   print(message)
+   #print(message)
    logger.info(message)
    lights_thread.start()
 
