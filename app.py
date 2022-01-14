@@ -79,7 +79,7 @@ modes = {
    19 : {'name' : "TheaterChaseWhite",      'R' : 255, 'G' : 255, 'B' : 255, 'Br' : 50},
    20 : {'name' : "TheaterChaseRed",        'R' : 255, 'G' : 000, 'B' : 000, 'Br' : 50},
    21 : {'name' : "TheaterChaseGreen",      'R' : 000, 'G' : 255, 'B' : 000, 'Br' : 50},
-   21 : {'name' : "TheaterChaseBlue",       'R' : 000, 'G' : 000, 'B' : 255, 'Br' : 50},
+   22 : {'name' : "TheaterChaseBlue",       'R' : 000, 'G' : 000, 'B' : 255, 'Br' : 50},
    23 : {'name' : "RainbowCycle",           'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    24 : {'name' : "TheaterChaseRainbow",    'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    25 : {'name' : "CountDown",              'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
