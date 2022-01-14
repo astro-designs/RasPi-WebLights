@@ -43,6 +43,7 @@ LED_INVERT      = False   # True to invert the signal (when using NPN transistor
 
 # Initial configuration
 mode            = WebLights_conf.mode
+prev_mode       = WebLights_conf.mode
 brightness      = WebLights_conf.brightness
 running         = False
 colorFMT        = WebLights_conf.colorFMT
@@ -81,7 +82,8 @@ modes = {
    22 : {'name' : "Rainbow",                'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    23 : {'name' : "RainbowCycle",           'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
    24 : {'name' : "TheaterChaseRainbow",    'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
-   25 : {'name' : "CountDown",              'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50}
+   25 : {'name' : "CountDown",              'R' : 000, 'G' : 000, 'B' : 000, 'Br' : 50},
+   26 : {'name' : "White_5min",             'R' : 255, 'G' : 255, 'B' : 255, 'Br' : 75}
    }
 
 # Create a dictionary called pins to store the pin number, name, and pin state:
@@ -951,6 +953,34 @@ def CountDown(strip, wait_ms=30):
 		mode = 16
 		UpdateRequired = True
         
+# Function to temporarily change the lights to all white, 75% max brightness
+# Reverts to previous mode after 5 minutes
+def White_5min(strip):
+	global mode, brightness
+    
+	print("Temporary program #1 - All white for 5 minutes")
+
+	current_mode = mode
+	current_brightness = brightness
+	wait_ms = 50
+	run_time = 6000 # Run for 5 minutes (6000 x 50ms)
+
+	red = modes[mode]['R']
+	green = modes[mode]['G']
+	blue = modes[mode]['B']
+	brightness = modes[mode]['Br']
+	setBrightness(red, green, blue, brightness)
+	colorWipe(strip, Color(red, green, blue),0)
+
+	while mode == current_mode:
+		if run_time > 1:
+			time.sleep(wait_ms/1000.0)
+			run_time = run_time - 1
+		else:
+			brightness = prev_brightness
+			mode = prev_mode
+
+
 class neopixel_prog:
    def __init__(self):
       self._running = True
@@ -1069,6 +1099,8 @@ class neopixel_prog:
                   theaterChaseRainbow(strip)
                elif mode == 25:
                   CountDown(strip)
+               elif mode == 26:
+                  White_5min(strip)
 
            running = False
 
@@ -1143,7 +1175,11 @@ def action(changePin, action):
 # The function below is executed when someone requests a mode change
 @app.route("/mode<changeMode>")
 def set_mode(changeMode):
-   global mode
+   global mode, prev_mode, prev_brightness
+   
+   # Store previous mode & brightness if we need to switch back...
+   prev_mode = mode
+   prev_brightness = brightness
    
    # Append zeros to changeMode
    Mode = '000' + str(changeMode)
