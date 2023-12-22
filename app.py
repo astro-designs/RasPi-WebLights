@@ -3,7 +3,7 @@
 RasPi-WebLights - Control Neopixels from a webpage - created by Mark Cantrill @Astro-Designs
 
 '''
-version = "1.0.25"
+version = "1.0.26"
 
 import os
 import sys
@@ -1279,7 +1279,7 @@ def system(action):
       message = "Shutting down..."
       #print(message)
       logger.info(message)
-      os.system("sudo shutdown") 
+      os.system("sudo shutdown now") 
    elif action == "exit":
       # Exit to the command prompt...
       message = "Closing..."
