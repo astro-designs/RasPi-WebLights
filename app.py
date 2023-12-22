@@ -3,7 +3,7 @@
 RasPi-WebLights - Control Neopixels from a webpage - created by Mark Cantrill @Astro-Designs
 
 '''
-version = "1.0.26"
+version = "1.0.27"
 
 import os
 import sys
@@ -658,7 +658,7 @@ def cheerlights(strip, wait_ms=1000):
         colorWipe(strip, color, 0)
         time.sleep(wait_ms/1000.0)
 	
-def theaterChase(strip, color, wait_ms=25):
+def theaterChase(strip, color, wait_ms=100):
 	#print("Movie theater light style chaser animation.")
 
 	current_mode = mode
@@ -729,7 +729,7 @@ def rainbowCycle(strip, wait_ms=20, iterations=5):
 
 	time.sleep(1)
 
-def theaterChaseRainbow(strip, wait_ms=50):
+def theaterChaseRainbow(strip, wait_ms=100):
 	#print("Rainbow movie theater light style chaser animation.")
 	
 	# Initialise variables...
